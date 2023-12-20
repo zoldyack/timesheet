@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="clock-buttons">
+      <button mat-raised-button color="primary" (click)="clockIn()" *ngIf="!clockStarted">Clock In</button>
+      <button mat-raised-button color="warn" (click)="clockOut()" *ngIf="clockStarted">Clock Out</button>
+      <span *ngIf="clockStarted" class="work-duration">{{ formattedWorkDuration }}</span>
+    </div>
+  <div class="d-flex content">
+      <div class="card-container col-6">
+        <div class="card">
+          <table class="table" >
+            <thead>
+              <tr>
+                <th>Clock In</th>
+                <th>Clock Out</th>
+                <th>Work Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="timeEntries.length === 0">
+                  <td colspan="3">No entries available</td>
+                </tr>
+                <tr *ngFor="let entry of timeEntries">
+                  <td>{{ entry.clockIn ? (entry.clockIn | date: 'medium') : 'N/A' }}</td>
+                  <td>{{ entry.clockOut ? (entry.clockOut | date: 'medium') : 'N/A' }}</td>
+                  <td>{{ entry.workDuration || 'N/A' }}</td>
+                </tr>
+              </tbody>
+              
+          </table>
+        </div>
+      </div>
+  
+      <div class="summary-card col-6">
+          <h3>Summary</h3>
+          <div class="summary-section">
+            <p>Total hours worked this week: {{ calculateWeeklyHours() }} hours</p>
+            <p>Total hours worked this month: {{ calculateMonthlyHours() }} hours</p>
+          </div>
+        </div>
+  </div>
